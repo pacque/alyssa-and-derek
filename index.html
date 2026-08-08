@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alyssa &amp; Derek — Save the Date</title>
-<meta property="og:title" content="Alyssa Vera & Derek Pacqué — Save the Date">
+<title>Alyssa &amp; Derek &middot; Save the Date</title>
+<meta property="og:title" content="Alyssa Vera & Derek Pacqué · Save the Date">
 <meta property="og:description" content="02.14.2027 · Miami, Florida · Behind every mask is a love story. Lift the mask.">
 <meta property="og:image" content="https://pacque.github.io/alyssa-and-derek/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -156,7 +156,7 @@
       </div>
       <div class="actions">
         <a class="btn" href="https://www.zola.com/wedding/alyssaandderekfebruary14" target="_blank" rel="noopener">Travel &amp; details</a>
-        <a class="btn ghost" id="ics" href="#" download="alyssa-and-derek-wedding.ics">Add to calendar</a>
+        <a class="btn ghost" id="ics" href="alyssa-derek-wedding.ics">Add to calendar</a>
       </div>
       <div class="foot">a love worth celebrating, a night worth remembering<br/><span style="font-size:.85em;opacity:.8;">formal invitation to follow &middot; masks encouraged</span></div>
     </div>
@@ -280,15 +280,6 @@
     document.body.appendChild(d);
   }
 
-  // add to calendar (.ics)
-  var ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//AlyssaDerek//SaveTheDate//EN','BEGIN:VEVENT',
-    'UID:alyssa-derek-2027@savethedate','DTSTAMP:20260726T120000Z',
-    'DTSTART;VALUE=DATE:20270214','DTEND;VALUE=DATE:20270215',
-    "SUMMARY:Alyssa & Derek's wedding",
-    'LOCATION:The Ancient Spanish Monastery\\, 16711 W Dixie Hwy\\, North Miami Beach\\, FL',
-    'DESCRIPTION:Save the date! Formal invitation to follow.',
-    'END:VEVENT','END:VCALENDAR'].join('\r\n');
-  document.getElementById('ics').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
 </script>
 </body>
 </html>

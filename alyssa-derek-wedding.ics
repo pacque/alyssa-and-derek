@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//AlyssaDerek//SaveTheDate//EN
+BEGIN:VEVENT
+UID:alyssa-derek-2027@savethedate
+DTSTAMP:20260808T120000Z
+DTSTART;VALUE=DATE:20270214
+DTEND;VALUE=DATE:20270215
+SUMMARY:Alyssa & Derek's wedding
+LOCATION:The Ancient Spanish Monastery\, 16711 W Dixie Hwy\, North Miami Beach\, FL
+DESCRIPTION:Save the date! Formal invitation to follow. Details: https://www.zola.com/wedding/alyssaandderekfebruary14
+URL:https://www.zola.com/wedding/alyssaandderekfebruary14
+END:VEVENT
+END:VCALENDAR
