@@ -262,9 +262,25 @@
   var params = new URLSearchParams(location.search);
   var g = params.get('g');
   // per-household click tracking for text-message sends (?t=id)
-  var TRACK_URL = 'https://script.google.com/macros/s/AKfycby5ua3Wehb-9Yk9tJUx2yrM36OduQlWBa0wOPstVAlWZVwTtYLUeLIfIB2-nrIZkcGh/exec';
+  var TRACK_URL = 'https://script.google.com/macros/s/AKfycbzLXaGgo9B0bAsFc4LolQnjAMDyDvCvXV0p8YkEjCNTXUTD3_gRvYgg6Fd1STj7I_cU/exec';
   var tid = params.get('t');
-  if (tid && TRACK_URL) { try { new Image().src = TRACK_URL + '?a=c&id=' + encodeURIComponent(tid); } catch(e){} }
+  if (tid && TRACK_URL) {
+    // only log a click on real human signals, so link-preview crawlers
+    // and prefetchers don't create phantom clicks in the sheet
+    var logged = false;
+    var logHit = function(){
+      if (logged) return; logged = true;
+      try { new Image().src = TRACK_URL + '?a=c&id=' + encodeURIComponent(tid); } catch(e){}
+    };
+    var armTimer = function(){
+      if (document.visibilityState === 'visible') setTimeout(logHit, 2500);
+    };
+    ['pointerdown','touchstart','keydown','scroll'].forEach(function(ev){
+      window.addEventListener(ev, logHit, { once: true, passive: true });
+    });
+    document.addEventListener('visibilitychange', armTimer);
+    armTimer();
+  }
   if (g) { var el = document.getElementById('greet'); el.hidden = false; el.textContent = 'Dear ' + g + ','; }
 
   // ---------- the strings: real sampled string quartet recording, seamless loop ----------
