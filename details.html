@@ -26,6 +26,7 @@
   h1 { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(20px,5vw,28px);
     letter-spacing:.35em; text-indent:.35em; text-transform:uppercase; color:#F5F1E9; margin-top:26px; }
   .sub { font-style:italic; font-size:clamp(16px,4vw,19px); color:#A7A4A0; margin-top:10px; }
+  .sub2 { font-style:italic; font-size:clamp(13px,3.2vw,15px); color:#8a8886; margin-top:6px; }
   .section { margin-top:52px; }
   h2 { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(14px,3.6vw,17px);
     letter-spacing:.3em; text-indent:.3em; text-transform:uppercase; color:#A7A4A0; }
@@ -41,6 +42,13 @@
     color:rgba(167,164,160,.85); line-height:1.8; }
   .back { display:inline-block; margin-top:20px; font-style:italic; font-size:16px;
     color:#A7A4A0; text-decoration:none; border-bottom:1px solid rgba(167,164,160,.4); }
+  .dust { position:fixed; border-radius:50%; background:#b9b6b1; z-index:0; pointer-events:none;
+    animation:float linear infinite; opacity:0; }
+  @keyframes float {
+    0% { transform:translateY(12vh); opacity:0; }
+    12% { opacity:var(--o); } 88% { opacity:var(--o); }
+    100% { transform:translateY(-105vh); opacity:0; }
+  }
 </style>
 </head>
 <body>
@@ -54,33 +62,37 @@
     <text x="63" y="58" font-family="Cinzel,serif" font-size="24" fill="#F5F1E9" text-anchor="middle">D</text>
   </svg>
   <h1>Travel &amp; Details</h1>
-  <div class="sub">Sunday, February 14, 2027 &middot; President&rsquo;s Day Weekend</div>
+  <div class="sub">Sunday, February 14, 2027 &middot; 5 to 11 in the evening</div>
+  <div class="sub2">Monday is President&rsquo;s Day</div>
 
   <div class="section">
     <h2>The venue</h2>
     <p>The Ancient Spanish Monastery<br/>16711 W Dixie Hwy, North Miami Beach, FL 33160</p>
-    <p class="quiet">A 12th-century Spanish monastery, rebuilt stone by stone in Miami. Yes, really.</p>
     <a class="btn" href="https://maps.google.com/?q=Ancient+Spanish+Monastery,+16711+W+Dixie+Hwy,+North+Miami+Beach,+FL" target="_blank" rel="noopener">Open in maps</a>
   </div>
 
   <div class="section">
     <h2>Getting there</h2>
-    <p>Fly into Miami International (MIA), about 25 minutes from the venue, or Fort Lauderdale (FLL), about 35 minutes. It&rsquo;s President&rsquo;s Day Weekend in Miami, so book flights early, fares climb fast for this weekend.</p>
+    <p>Miami International (MIA) &middot; 25 minutes<br/>Fort Lauderdale (FLL) &middot; 35 minutes</p>
+    <p class="quiet">Holiday-weekend fares climb quickly, book early.</p>
   </div>
 
   <div class="section">
     <h2>Where to stay</h2>
-    <p class="quiet">We&rsquo;re finalizing a hotel block nearby, room details and booking links will come with the formal invitation. If you&rsquo;d rather book now, anywhere in North Miami Beach, Sunny Isles, or Bal Harbour keeps you close.</p>
+    <p>Hotel block coming with the invitation.</p>
+    <p class="quiet">Booking early? North Miami Beach, Sunny Isles, or Bal Harbour keep you close.</p>
   </div>
 
   <div class="section">
     <h2>The weekend</h2>
-    <p class="quiet">Ceremony and reception are Sunday evening, February 14. Monday is President&rsquo;s Day, so plan to stay and recover with us. The full weekend schedule arrives with the invitation.</p>
+    <p>Saturday evening &middot; welcome drinks<br/>Sunday &middot; ceremony at 5, reception immediately following, until 11</p>
+    <p class="quiet">Full schedule with the invitation.</p>
   </div>
 
   <div class="section">
     <h2>Attire</h2>
-    <p class="quiet">Formal attire, details to follow. Masks encouraged, we mean it.</p>
+    <p>Black tie optional.</p>
+    <p class="quiet">Masks encouraged.</p>
   </div>
 
   <div class="section">
@@ -89,10 +101,22 @@
   </div>
 
   <div class="foot">
-    a love worth celebrating, a night worth remembering<br/>
-    formal invitation &middot; full schedule &middot; RSVP to follow
+    formal invitation, full schedule, and RSVP to follow
     <br/><a class="back" href="index.html">back to the save the date</a>
   </div>
 </div>
+<script>
+  for (var i = 0; i < 22; i++) {
+    var p = document.createElement('div'); p.className = 'dust';
+    var s = 2 + Math.random() * 3.5;
+    p.style.width = p.style.height = s + 'px';
+    p.style.left = (Math.random() * 100) + 'vw';
+    p.style.top = (55 + Math.random() * 50) + 'vh';
+    p.style.setProperty('--o', (0.12 + Math.random() * 0.4).toFixed(2));
+    p.style.animationDuration = (14 + Math.random() * 18) + 's';
+    p.style.animationDelay = (-Math.random() * 20) + 's';
+    document.body.appendChild(p);
+  }
+</script>
 </body>
 </html>
