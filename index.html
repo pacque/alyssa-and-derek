@@ -262,7 +262,7 @@
   var params = new URLSearchParams(location.search);
   var g = params.get('g');
   // per-household click tracking for text-message sends (?t=id)
-  var TRACK_URL = ''; // Apps Script web app URL goes here after deployment
+  var TRACK_URL = 'https://script.google.com/macros/s/AKfycby5ua3Wehb-9Yk9tJUx2yrM36OduQlWBa0wOPstVAlWZVwTtYLUeLIfIB2-nrIZkcGh/exec';
   var tid = params.get('t');
   if (tid && TRACK_URL) { try { new Image().src = TRACK_URL + '?a=c&id=' + encodeURIComponent(tid); } catch(e){} }
   if (g) { var el = document.getElementById('greet'); el.hidden = false; el.textContent = 'Dear ' + g + ','; }
