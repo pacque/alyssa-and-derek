@@ -59,7 +59,7 @@
   .details { position:absolute; inset:0; display:flex; flex-direction:column;
     align-items:center; justify-content:flex-start; overflow-y:auto; padding:24px;
     padding-top:max(20px, calc(52vh - 118px));
-    padding-top:max(20px, min(calc(52dvh - 118px), calc(100dvh - 620px)));
+    padding-top:max(20px, calc(52dvh - 118px));
     padding-bottom:calc(28px + env(safe-area-inset-bottom));
     filter:blur(16px); opacity:.22; transform:scale(.985);
     transition:filter 1.4s ease .55s, opacity 1.4s ease .55s, transform 1.4s ease .55s;
@@ -136,6 +136,7 @@
     .music { top:auto; bottom:16px; right:auto; left:18px; }
   }
   @media (max-height: 720px) {
+    .details { padding-top:18px !important; }
     .names { font-size:clamp(30px,6vmin,52px); }
     .bigdate { font-size:clamp(22px,4.2vmin,36px); letter-spacing:.1em; text-indent:.1em; }
     .greet { font-size:clamp(14px,2.1vmin,17px); margin-bottom:.5vmin; }
@@ -175,7 +176,7 @@
         <div class="city">North Miami Beach, Florida</div>
       </div>
       <div class="actions">
-        <a class="btn" href="https://www.zola.com/wedding/alyssaandderekfebruary14" target="_blank" rel="noopener">Travel &amp; details</a>
+        <a class="btn" href="details.html">Travel &amp; details</a>
         <a class="btn ghost" id="ics" href="alyssa-derek-wedding.ics">Add to calendar</a>
       </div>
       <div class="foot">a love worth celebrating, a night worth remembering<br/><span style="font-size:.85em;opacity:.8;">formal invitation to follow &middot; masks encouraged</span></div>
@@ -198,6 +199,10 @@
   // greeting from ?g=
   var params = new URLSearchParams(location.search);
   var g = params.get('g');
+  // per-household click tracking for text-message sends (?t=id)
+  var TRACK_URL = ''; // Apps Script web app URL goes here after deployment
+  var tid = params.get('t');
+  if (tid && TRACK_URL) { try { new Image().src = TRACK_URL + '?a=c&id=' + encodeURIComponent(tid); } catch(e){} }
   if (g) { var el = document.getElementById('greet'); el.hidden = false; el.textContent = 'Dear ' + g + ','; }
 
   // ---------- the strings: real sampled string quartet recording, seamless loop ----------
