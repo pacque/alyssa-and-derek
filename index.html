@@ -60,7 +60,7 @@
     align-items:center; justify-content:flex-start; overflow-y:auto; padding:24px;
     padding-top:max(20px, calc(50vh - 150px));
     padding-top:max(20px, calc(50dvh - 150px));
-    padding-bottom:calc(28px + env(safe-area-inset-bottom));
+    padding-bottom:calc(88px + env(safe-area-inset-bottom));
     filter:blur(16px); opacity:.22; transform:scale(.985);
     transition:filter 1.4s ease .55s, opacity 1.4s ease .55s, transform 1.4s ease .55s;
     pointer-events:none; }
@@ -73,28 +73,28 @@
   body.lifted .details > :nth-child(5){transition-delay:1.55s} body.lifted .details > :nth-child(6){transition-delay:1.8s}
   body.lifted .details > :nth-child(7){transition-delay:2.05s} body.lifted .details > :nth-child(8){transition-delay:2.3s}
 
-  .greet { font-style:italic; font-size:clamp(15px,2.3vmin,19px); color:rgba(245,241,233,.75); margin-bottom:.8vmin; }
+  .greet { font-style:italic; font-size:clamp(15px,2.3vmin,19px); color:rgba(245,241,233,.75); margin-bottom:clamp(6px,1vh,12px); }
   .eyebrow { font-family:'Cinzel',serif; font-weight:500; letter-spacing:.55em; text-indent:.55em;
     font-size:clamp(13px,2.2vmin,19px); color:#A7A4A0; }
   .names { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:400;
-    font-size:clamp(38px,7vmin,62px); line-height:1.06; margin-top:.8vmin; color:#F5F1E9; letter-spacing:.01em; }
+    font-size:clamp(38px,7vmin,62px); line-height:1.06; margin-top:clamp(6px,1vh,12px); color:#F5F1E9; letter-spacing:.01em; }
   .names .amp { color:#A7A4A0; font-size:.6em; padding:0 .12em; }
   .married { font-style:italic; font-size:clamp(15px,2.5vmin,21px); color:rgba(245,241,233,.75);
-    letter-spacing:.08em; margin-top:.8vmin; }
-  .datewrap { margin-top:1.2vmin; }
+    letter-spacing:.08em; margin-top:clamp(6px,1vh,12px); }
+  .datewrap { margin-top:clamp(14px,2.4vh,28px); }
   .bigdate { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(26px,4.8vmin,42px);
     letter-spacing:.14em; text-indent:.14em; color:#F5F1E9; }
-  .dayline { font-style:italic; font-size:clamp(15px,2.4vmin,21px); color:rgba(245,241,233,.7); margin-top:.7vmin; }
-  .venue { margin-top:1.4vmin; font-family:'Cinzel',serif; font-size:clamp(15px,2.4vmin,22px);
+  .dayline { font-style:italic; font-size:clamp(15px,2.4vmin,21px); color:rgba(245,241,233,.7); margin-top:clamp(6px,1.1vh,14px); }
+  .venue { margin-top:clamp(12px,2vh,24px); font-family:'Cinzel',serif; font-size:clamp(15px,2.4vmin,22px);
     letter-spacing:.22em; text-indent:.22em; color:#F5F1E9; }
   .city { font-family:'Cinzel',serif; text-transform:uppercase; font-size:clamp(11px,1.8vmin,15px);
-    letter-spacing:.32em; text-indent:.32em; color:#A7A4A0; margin-top:.9vmin; }
-  .actions { margin-top:1.6vmin; display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+    letter-spacing:.32em; text-indent:.32em; color:#A7A4A0; margin-top:clamp(6px,1.1vh,14px); }
+  .actions { margin-top:clamp(14px,2.4vh,28px); display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
   .btn { font-family:'Cinzel',serif; font-size:clamp(12px,1.9vmin,15px); letter-spacing:.14em;
     color:#090909; background:linear-gradient(180deg,#c9c6c2,#8f8c88); border:none; cursor:pointer;
     padding:10px 22px; border-radius:2px; text-decoration:none; display:inline-block; }
   .btn.ghost { background:none; color:#A7A4A0; border:1px solid rgba(167,164,160,.5); }
-  .foot { margin-top:1.2vmin; font-style:italic; font-size:clamp(14px,2.2vmin,19px);
+  .foot { margin-top:clamp(12px,2vh,24px); font-style:italic; font-size:clamp(14px,2.2vmin,19px);
     letter-spacing:.1em; color:rgba(167,164,160,.85); }
   .travel { margin-top:1vmin; font-size:clamp(13px,2vmin,16px); color:rgba(167,164,160,.85); max-width:780px; }
 
@@ -133,11 +133,36 @@
     cursor:pointer; opacity:0; transition:opacity .6s ease 1.2s; }
   body.lifted .music { opacity:1; }
   .music:hover { color:#F5F1E9; border-color:rgba(167,164,160,.7); }
+  .dpanel { position:fixed; inset:0; z-index:30; background:#0b0b0c; overflow-y:auto;
+    -webkit-overflow-scrolling:touch; opacity:0; visibility:hidden; transform:translateY(3vh);
+    transition:opacity .5s ease, transform .5s ease, visibility 0s linear .5s; }
+  .dpanel.open { opacity:1; visibility:visible; transform:none; transition:opacity .5s ease, transform .5s ease; }
+  .dwrap { max-width:640px; margin:0 auto; padding:56px 28px calc(64px + env(safe-area-inset-bottom)); text-align:center; }
+  .dwrap h1 { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(20px,5vw,28px);
+    letter-spacing:.35em; text-indent:.35em; text-transform:uppercase; color:#F5F1E9; }
+  .dsub { font-style:italic; font-size:clamp(16px,4vw,19px); color:#A7A4A0; margin-top:10px; }
+  .dsub2 { font-style:italic; font-size:clamp(13px,3.2vw,15px); color:#8a8886; margin-top:6px; }
+  .dsec { margin-top:48px; }
+  .dwrap h2 { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(14px,3.6vw,17px);
+    letter-spacing:.3em; text-indent:.3em; text-transform:uppercase; color:#A7A4A0; }
+  .dwrap h2::after { content:''; display:block; width:120px; height:1px;
+    background:rgba(167,164,160,.4); margin:14px auto 0; }
+  .dsec p { font-size:clamp(16px,4.2vw,19px); line-height:1.65; margin-top:16px; color:#F5F1E9;
+    font-family:'Cormorant Garamond',serif; }
+  .dsec p.dquiet { color:rgba(167,164,160,.95); font-style:italic; font-size:clamp(15px,3.9vw,17px); }
+  .dbtn { font-family:'Cinzel',serif; font-size:clamp(12px,3vw,14px); letter-spacing:.14em;
+    color:#090909; background:linear-gradient(180deg,#c9c6c2,#8f8c88); border:none;
+    padding:12px 26px; border-radius:2px; text-decoration:none; display:inline-block; margin-top:20px; }
+  .dbtn.dghost { background:none; color:#A7A4A0; border:1px solid rgba(167,164,160,.5); }
+  .dclose { display:inline-block; margin-top:56px; font-style:italic; font-size:16px;
+    font-family:'Cormorant Garamond',serif; color:#A7A4A0; background:none; border:none; cursor:pointer;
+    border-bottom:1px solid rgba(167,164,160,.4); }
   @media (max-width: 430px) {
     .music { top:auto; bottom:16px; right:auto; left:18px; }
+    .actions { gap:10px; flex-wrap:nowrap; }
+    .btn { padding:10px 14px; font-size:11.5px; letter-spacing:.1em; white-space:nowrap; }
   }
   @media (max-height: 720px) {
-    .details { padding-top:max(16px, calc(50dvh - 132px)) !important; }
     .names { font-size:clamp(30px,6vmin,52px); }
     .bigdate { font-size:clamp(22px,4.2vmin,36px); letter-spacing:.1em; text-indent:.1em; }
     .greet { font-size:clamp(14px,2.1vmin,17px); margin-bottom:.5vmin; }
@@ -177,7 +202,7 @@
         <div class="city">North Miami Beach, Florida</div>
       </div>
       <div class="actions">
-        <a class="btn" href="details.html">Travel &amp; details</a>
+        <a class="btn" href="details.html" id="openDetails">Travel &amp; details</a>
         <a class="btn ghost" id="ics" href="alyssa-derek-wedding.ics">Add to calendar</a>
       </div>
       <div class="foot">a love worth celebrating, a night worth remembering<br/><span style="font-size:.85em;opacity:.8;">formal invitation to follow &middot; masks encouraged</span></div>
@@ -193,6 +218,43 @@
     </div>
   </div>
 
+  <div class="dpanel" id="dpanel" aria-hidden="true">
+    <div class="dwrap">
+      <h1>Travel &amp; Details</h1>
+      <div class="dsub">Sunday, February 14, 2027 &middot; 5 to 11 in the evening</div>
+      <div class="dsub2">Monday is President&rsquo;s Day</div>
+      <div class="dsec">
+        <h2>The venue</h2>
+        <p>The Ancient Spanish Monastery<br/>16711 W Dixie Hwy, North Miami Beach, FL 33160</p>
+        <a class="dbtn" href="https://maps.google.com/?q=Ancient+Spanish+Monastery,+16711+W+Dixie+Hwy,+North+Miami+Beach,+FL" target="_blank" rel="noopener">Open in maps</a>
+      </div>
+      <div class="dsec">
+        <h2>Getting there</h2>
+        <p>Miami International (MIA) &middot; 25 minutes<br/>Fort Lauderdale (FLL) &middot; 35 minutes</p>
+        <p class="dquiet">Holiday-weekend fares climb quickly, book early.</p>
+      </div>
+      <div class="dsec">
+        <h2>Where to stay</h2>
+        <p>Hotel block coming with the invitation.</p>
+        <p class="dquiet">Booking early? North Miami Beach, Sunny Isles, or Bal Harbour keep you close.</p>
+      </div>
+      <div class="dsec">
+        <h2>The weekend</h2>
+        <p>Saturday evening &middot; welcome drinks<br/>Sunday &middot; ceremony at 5, reception immediately following, until 11</p>
+        <p class="dquiet">Full schedule with the invitation.</p>
+      </div>
+      <div class="dsec">
+        <h2>Attire</h2>
+        <p>Black tie optional.</p>
+        <p class="dquiet">Masks encouraged.</p>
+      </div>
+      <div class="dsec">
+        <h2>Add to calendar</h2>
+        <a class="dbtn dghost" href="alyssa-derek-wedding.ics" target="_blank" rel="noopener">Add the date</a>
+      </div>
+      <button class="dclose" id="closeDetails">back to the save the date</button>
+    </div>
+  </div>
   <button class="again" id="again">wear the mask again</button>
   <button class="music" id="music" hidden>&#9835; music off</button>
 
@@ -268,6 +330,20 @@
     else { stopMusic(); this.innerHTML = '&#9835; music on'; }
   });
 
+  // pin the names row to the exact vertical center, whatever the screen or text size
+  function centerNames(){
+    var d = document.querySelector('.details');
+    var nm = document.querySelector('.names');
+    if (!d || !nm) return;
+    var cur = parseFloat(getComputedStyle(d).paddingTop) || 0;
+    var r = nm.getBoundingClientRect();
+    var delta = (window.innerHeight * 0.5) - (r.top + r.height / 2);
+    d.style.paddingTop = Math.max(16, cur + delta) + 'px';
+  }
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ setTimeout(centerNames, 50); }); }
+  window.addEventListener('load', function(){ setTimeout(centerNames, 120); });
+  window.addEventListener('resize', function(){ setTimeout(centerNames, 120); });
+
   // reveal
   var hit = document.getElementById('hit');
   function lift(){
@@ -279,6 +355,15 @@
   }
   hit.addEventListener('click', lift);
   hit.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' ') lift(); });
+  var dpanel = document.getElementById('dpanel');
+  document.getElementById('openDetails').addEventListener('click', function(e){
+    e.preventDefault();
+    dpanel.classList.add('open'); dpanel.setAttribute('aria-hidden','false');
+    dpanel.scrollTop = 0;
+  });
+  document.getElementById('closeDetails').addEventListener('click', function(){
+    dpanel.classList.remove('open'); dpanel.setAttribute('aria-hidden','true');
+  });
   document.getElementById('again').addEventListener('click', function(){
     document.body.classList.remove('lifted');
     stopMusic();
