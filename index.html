@@ -154,6 +154,9 @@
     color:#090909; background:linear-gradient(180deg,#c9c6c2,#8f8c88); border:none;
     padding:12px 26px; border-radius:2px; text-decoration:none; display:inline-block; margin-top:20px; }
   .dbtn.dghost { background:none; color:#A7A4A0; border:1px solid rgba(167,164,160,.5); }
+  .rsvp-btns { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:14px; }
+  .rsvp-btns .rsvp { margin-top:0; cursor:pointer; }
+  .rsvp-btns .rsvp.sel { background:linear-gradient(180deg,#c9c6c2,#8f8c88); color:#090909; border-color:transparent; }
   .dclose { display:inline-block; margin-top:56px; font-style:italic; font-size:16px;
     font-family:'Cormorant Garamond',serif; color:#A7A4A0; background:none; border:none; cursor:pointer;
     border-bottom:1px solid rgba(167,164,160,.4); }
@@ -247,6 +250,15 @@
         <p>Black Tie Optional</p>
         <p class="dquiet">Masks Encouraged</p>
       </div>
+      <div class="dsec" id="rsvpSec" hidden>
+        <h2>May we expect you?</h2>
+        <div class="rsvp-btns" id="rsvpBtns">
+          <button class="dbtn dghost rsvp" data-v="yes">Joyfully yes</button>
+          <button class="dbtn dghost rsvp" data-v="maybe">Perhaps</button>
+          <button class="dbtn dghost rsvp" data-v="no">Regretfully no</button>
+        </div>
+        <p class="dquiet" id="rsvpDone" hidden></p>
+      </div>
       <div class="dsec">
         <h2>Add to calendar</h2>
         <a class="dbtn dghost" href="alyssa-derek-wedding.ics" target="_blank" rel="noopener">Add the date</a>
@@ -282,6 +294,33 @@
     armTimer();
   }
   if (g) { var el = document.getElementById('greet'); el.hidden = false; el.textContent = 'Dear ' + g + ','; }
+
+  // soft headcount: "May we expect you?" — only for personal links (?t=)
+  (function(){
+    if (!tid || !TRACK_URL) return;
+    var sec = document.getElementById('rsvpSec');
+    var btns = document.getElementById('rsvpBtns');
+    var done = document.getElementById('rsvpDone');
+    if (!sec) return;
+    sec.hidden = false;
+    var LINES = { yes: 'noted with joy, the masks await', maybe: 'we\u2019ll hope the night wins you over', no: 'you\u2019ll be missed, thank you for telling us' };
+    var mark = function(v, silent){
+      Array.prototype.forEach.call(btns.querySelectorAll('.rsvp'), function(b){
+        b.classList.toggle('sel', b.getAttribute('data-v') === v);
+      });
+      done.textContent = LINES[v] || '';
+      done.hidden = false;
+      if (!silent) { try { new Image().src = TRACK_URL + '?a=r&id=' + encodeURIComponent(tid) + '&v=' + encodeURIComponent(v); } catch(e){} }
+      try { localStorage.setItem('rsvp-' + tid, v); } catch(e){}
+    };
+    var prev = null;
+    try { prev = localStorage.getItem('rsvp-' + tid); } catch(e){}
+    if (prev) mark(prev, true);
+    btns.addEventListener('click', function(ev){
+      var b = ev.target.closest('.rsvp'); if (!b) return;
+      mark(b.getAttribute('data-v'));
+    });
+  })();
 
   // ---------- the strings: real sampled string quartet recording, seamless loop ----------
   var AC = window.AudioContext || window.webkitAudioContext;

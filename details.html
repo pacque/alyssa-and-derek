@@ -42,6 +42,9 @@
     color:rgba(167,164,160,.85); line-height:1.8; }
   .back { display:inline-block; margin-top:20px; font-style:italic; font-size:16px;
     color:#A7A4A0; text-decoration:none; border-bottom:1px solid rgba(167,164,160,.4); }
+  .rsvp-btns { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:16px; }
+  .rsvp-btns .rsvp { margin-top:0; cursor:pointer; font-family:'Cinzel',serif; }
+  .rsvp-btns .rsvp.sel { background:linear-gradient(180deg,#c9c6c2,#8f8c88); color:#090909; border-color:transparent; }
   .dust { position:fixed; border-radius:50%; background:#b9b6b1; z-index:0; pointer-events:none;
     animation:float linear infinite; opacity:0; }
   @keyframes float {
@@ -94,6 +97,16 @@
     <p class="quiet">Masks Encouraged</p>
   </div>
 
+  <div class="section" id="rsvpSec" hidden>
+    <h2>May we expect you?</h2>
+    <div class="rsvp-btns" id="rsvpBtns">
+      <button class="btn ghost rsvp" data-v="yes">Joyfully yes</button>
+      <button class="btn ghost rsvp" data-v="maybe">Perhaps</button>
+      <button class="btn ghost rsvp" data-v="no">Regretfully no</button>
+    </div>
+    <p class="quiet" id="rsvpDone" hidden></p>
+  </div>
+
   <div class="section">
     <h2>Add to calendar</h2>
     <a class="btn ghost" href="alyssa-derek-wedding.ics">Add the date</a>
@@ -105,6 +118,35 @@
   </div>
 </div>
 <script>
+  // soft headcount — only for personal links (?t=)
+  (function(){
+    var TRACK_URL = 'https://script.google.com/macros/s/AKfycbzLXaGgo9B0bAsFc4LolQnjAMDyDvCvXV0p8YkEjCNTXUTD3_gRvYgg6Fd1STj7I_cU/exec';
+    var tid = new URLSearchParams(location.search).get('t');
+    if (!tid) return;
+    var sec = document.getElementById('rsvpSec');
+    var btns = document.getElementById('rsvpBtns');
+    var done = document.getElementById('rsvpDone');
+    if (!sec) return;
+    sec.hidden = false;
+    var LINES = { yes: 'noted with joy, the masks await', maybe: 'we\u2019ll hope the night wins you over', no: 'you\u2019ll be missed, thank you for telling us' };
+    var mark = function(v, silent){
+      Array.prototype.forEach.call(btns.querySelectorAll('.rsvp'), function(b){
+        b.classList.toggle('sel', b.getAttribute('data-v') === v);
+      });
+      done.textContent = LINES[v] || '';
+      done.hidden = false;
+      if (!silent) { try { new Image().src = TRACK_URL + '?a=r&id=' + encodeURIComponent(tid) + '&v=' + encodeURIComponent(v); } catch(e){} }
+      try { localStorage.setItem('rsvp-' + tid, v); } catch(e){}
+    };
+    var prev = null;
+    try { prev = localStorage.getItem('rsvp-' + tid); } catch(e){}
+    if (prev) mark(prev, true);
+    btns.addEventListener('click', function(ev){
+      var b = ev.target.closest('.rsvp'); if (!b) return;
+      mark(b.getAttribute('data-v'));
+    });
+  })();
+
   for (var i = 0; i < 22; i++) {
     var p = document.createElement('div'); p.className = 'dust';
     var s = 2 + Math.random() * 3.5;
