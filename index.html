@@ -98,6 +98,24 @@
     letter-spacing:.1em; color:rgba(167,164,160,.85); }
   .travel { margin-top:1vmin; font-size:clamp(13px,2vmin,16px); color:rgba(167,164,160,.85); max-width:780px; }
 
+  .ask { margin-top:clamp(8px,1.3vh,14px); display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .ask-q { font-style:italic; font-size:clamp(13px,2vmin,16px); color:rgba(245,241,233,.75); }
+  .ask-opts { display:flex; gap:7px; flex-wrap:wrap; justify-content:center; }
+  .ask-btn { font-family:'Cinzel',serif; font-size:clamp(9px,1.5vmin,12px); letter-spacing:.12em;
+    color:#A7A4A0; background:none; border:1px solid rgba(167,164,160,.5);
+    padding:6px 12px; border-radius:2px; cursor:pointer; }
+  .ask-btn.sel { background:linear-gradient(180deg,#c9c6c2,#8f8c88); color:#090909; border-color:transparent; }
+  .ask-done { font-style:italic; font-size:clamp(12px,1.8vmin,15px); color:rgba(167,164,160,.9); }
+
+  /* tighter rhythm only when the ask row is present (personal links) */
+  body.hasask .greet { margin-bottom:clamp(12px,2vh,22px); }
+  body.hasask .datewrap { margin-top:clamp(10px,1.7vh,18px); }
+  body.hasask .dayline { margin-top:clamp(5px,.9vh,10px); }
+  body.hasask .venue { margin-top:clamp(9px,1.5vh,16px); }
+  body.hasask .city { margin-top:clamp(5px,.9vh,10px); }
+  body.hasask .actions { margin-top:clamp(10px,1.7vh,18px); }
+  body.hasask .foot { margin-top:clamp(8px,1.3vh,14px); }
+
   /* ---------- the mask ---------- */
   .mask-hit { position:absolute; inset:0; z-index:10; display:flex; flex-direction:column;
     align-items:center; justify-content:center; cursor:pointer; }
@@ -208,6 +226,15 @@
         <a class="btn" href="details.html" id="openDetails">Travel &amp; details</a>
         <a class="btn ghost" id="ics" href="alyssa-derek-wedding.ics">Add to calendar</a>
       </div>
+      <div class="ask" id="askRow" hidden>
+        <span class="ask-q">may we expect you?</span>
+        <span class="ask-opts">
+          <button class="ask-btn" data-v="yes">Joyfully yes</button>
+          <button class="ask-btn" data-v="maybe">Perhaps</button>
+          <button class="ask-btn" data-v="no">Regretfully no</button>
+        </span>
+        <span class="ask-done" id="askDone" hidden></span>
+      </div>
       <div class="foot">a love worth celebrating, a night worth remembering<br/><span style="font-size:.85em;opacity:.8;">formal invitation to follow &middot; masks encouraged</span></div>
     </div>
 
@@ -299,25 +326,26 @@
   (function(){
     if (!tid || !TRACK_URL) return;
     var sec = document.getElementById('rsvpSec');
-    var btns = document.getElementById('rsvpBtns');
-    var done = document.getElementById('rsvpDone');
-    if (!sec) return;
-    sec.hidden = false;
+    var ask = document.getElementById('askRow');
+    if (sec) sec.hidden = false;
+    if (ask) { ask.hidden = false; document.body.classList.add('hasask'); }
     var LINES = { yes: 'noted with joy, the masks await', maybe: 'we\u2019ll hope the night wins you over', no: 'you\u2019ll be missed, thank you for telling us' };
     var mark = function(v, silent){
-      Array.prototype.forEach.call(btns.querySelectorAll('.rsvp'), function(b){
+      Array.prototype.forEach.call(document.querySelectorAll('.rsvp, .ask-btn'), function(b){
         b.classList.toggle('sel', b.getAttribute('data-v') === v);
       });
-      done.textContent = LINES[v] || '';
-      done.hidden = false;
+      Array.prototype.forEach.call(document.querySelectorAll('#rsvpDone, #askDone'), function(d){
+        d.textContent = LINES[v] || '';
+        d.hidden = false;
+      });
       if (!silent) { try { new Image().src = TRACK_URL + '?a=r&id=' + encodeURIComponent(tid) + '&v=' + encodeURIComponent(v); } catch(e){} }
       try { localStorage.setItem('rsvp-' + tid, v); } catch(e){}
     };
     var prev = null;
     try { prev = localStorage.getItem('rsvp-' + tid); } catch(e){}
     if (prev) mark(prev, true);
-    btns.addEventListener('click', function(ev){
-      var b = ev.target.closest('.rsvp'); if (!b) return;
+    document.addEventListener('click', function(ev){
+      var b = ev.target.closest('.rsvp, .ask-btn'); if (!b) return;
       mark(b.getAttribute('data-v'));
     });
   })();
